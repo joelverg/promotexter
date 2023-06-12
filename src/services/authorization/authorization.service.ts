@@ -23,19 +23,11 @@ export class AuthorizationService {
   }
 
   verifyAuthorizationToken(token: Token): Observable<string> {
-    console.log(
-      this.validationAttempts < 5 && this.isUserBlocked === false,
-      'validation',
-    );
-    console.log(this.isUserBlocked, 'after');
-
     if (this.validationAttempts < 5 && this.isUserBlocked === false) {
       if (token.token === this.tokenStorage.token) {
         return of('Success');
       } else {
         this.validationAttempts++;
-
-        console.log(this.validationAttempts);
 
         return of('Invalid Token');
       }
@@ -45,11 +37,7 @@ export class AuthorizationService {
   }
 
   userBlocked(): Observable<string> {
-    console.log(this.isUserBlocked);
-
     if (this.isUserBlocked === true) {
-      console.log(this.isUserBlocked);
-
       return of('User is still block');
     } else {
       this.isUserBlocked = true;
